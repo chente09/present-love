@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar QR</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Generador de Código QR</h1>
+    <input type="text" id="link" placeholder="Introduce el enlace" style="width: 300px;">
+    <button onclick="generarQR()">Generar QR</button>
+    <div id="qrcode"></div>
+
+    <script>
+        function generarQR() {
+            const link = document.getElementById('link').value;
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = ""; // Limpiar QR previo
+
+            // Crear un elemento <canvas> donde se renderizará el QR
+            const canvas = document.createElement('canvas');
+            qrContainer.appendChild(canvas);
+
+            // Generar el código QR en el <canvas>
+            QRCode.toCanvas(canvas, link, { width: 200 }, function (error) {
+                if (error) {
+                    console.error("Error generando el código QR:", error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
