@@ -64,7 +64,7 @@
             </div>
             <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
         </section>
-        
+
         <section class="quote">
             <p>“A tu lado, cada día es un poema, y cada instante, un verso de amor eterno.”</p>
         </section>
@@ -110,11 +110,14 @@
             <p>Prometo cuidar de nuestro amor como lo más valioso que tengo.</p>
         </section>
     </div>
-    <!-- Reproductor de audio para la canción de fondo -->
     <audio id="background-music" autoplay loop>
         <source src="Audio.mp3" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
     </audio>
+
+    <section class="audio-control">
+        <button id="toggle-audio">Pausar Música</button>
+    </section>
     <script src="script.js"></script>
 </body>
 

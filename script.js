@@ -1,5 +1,7 @@
 const App = {
   currentIndex: 0,
+  backgroundMusic: null, // Referencia al audio
+  toggleAudioBtn: null, // Referencia al botón para controlar el audio
 
   // Actualizar el carrusel
   updateCarousel() {
@@ -10,6 +12,7 @@ const App = {
       videos.forEach((video, index) => {
           if (index === this.currentIndex) {
               video.play(); // Reproducir el video actual
+              this.pauseBackgroundMusic(); // Pausar música si el video está en reproducción
           } else {
               video.pause(); // Pausar los demás videos
           }
@@ -33,26 +36,77 @@ const App = {
       this.updateCarousel();
   },
 
+  // Pausar la música de fondo
+  pauseBackgroundMusic() {
+      if (!this.backgroundMusic.paused) {
+          this.backgroundMusic.pause();
+          this.toggleAudioBtn.textContent = "Reanudar Música";
+      }
+  },
+
+  // Alternar la reproducción de la música de fondo
+  toggleBackgroundMusic() {
+      if (this.backgroundMusic.paused) {
+          this.backgroundMusic.play();
+          this.toggleAudioBtn.textContent = "Pausar Música";
+      } else {
+          this.backgroundMusic.pause();
+          this.toggleAudioBtn.textContent = "Reanudar Música";
+      }
+  },
+
   // Actualizar el temporizador
   updateTimer() {
-      const startDate = new Date("2024-07-28T20:35:00");
-      const now = new Date();
-      const elapsed = now - startDate;
+    const startDate = new Date("2024-07-28T20:35:00");
+    const now = new Date();
 
-      const years = Math.floor(elapsed / (365.25 * 24 * 60 * 60 * 1000));
-      const months = Math.floor((elapsed % (365.25 * 24 * 60 * 60 * 1000)) / (30 * 24 * 60 * 60 * 1000));
-      const days = Math.floor((elapsed % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
-      const hours = Math.floor((elapsed % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-      const minutes = Math.floor((elapsed % (60 * 60 * 1000)) / (60 * 1000));
-      const seconds = Math.floor((elapsed % (60 * 1000)) / 1000);
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+    let hours = now.getHours() - startDate.getHours();
+    let minutes = now.getMinutes() - startDate.getMinutes();
+    let seconds = now.getSeconds() - startDate.getSeconds();
 
-      document.getElementById("years").textContent = years;
-      document.getElementById("months").textContent = months;
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-  },
+    // Ajuste si los meses son negativos
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    // Ajuste si los días son negativos
+    if (days < 0) {
+        months--;
+        // Obtener el número de días del mes anterior
+        const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += previousMonth.getDate();
+    }
+
+    // Ajuste si las horas son negativas
+    if (hours < 0) {
+        days--;
+        hours += 24;
+    }
+
+    // Ajuste si los minutos son negativos
+    if (minutes < 0) {
+        hours--;
+        minutes += 60;
+    }
+
+    // Ajuste si los segundos son negativos
+    if (seconds < 0) {
+        minutes--;
+        seconds += 60;
+    }
+
+    // Actualizar en el HTML
+    document.getElementById("years").textContent = years;
+    document.getElementById("months").textContent = months;
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+},
 
   // Actualizar el mensaje
   updateMessage() {
@@ -73,6 +127,25 @@ const App = {
   init() {
       document.querySelector('.prev').addEventListener('click', () => this.prevSlide());
       document.querySelector('.next').addEventListener('click', () => this.nextSlide());
+
+      // Referencias al audio y botón
+      this.backgroundMusic = document.getElementById('background-music');
+      this.toggleAudioBtn = document.getElementById('toggle-audio');
+
+      // Escuchar el clic del botón para alternar música
+      this.toggleAudioBtn.addEventListener('click', () => this.toggleBackgroundMusic());
+
+      // Pausar la música cuando se reproduce un video
+      const videos = document.querySelectorAll('video');
+      videos.forEach(video => {
+          video.addEventListener('play', () => this.pauseBackgroundMusic());
+          video.addEventListener('pause', () => {
+              if (Array.from(videos).every(v => v.paused)) {
+                  this.backgroundMusic.play();
+                  this.toggleAudioBtn.textContent = "Pausar Música";
+              }
+          });
+      });
 
       this.updateCarousel();
       setInterval(() => this.updateTimer(), 1000);
