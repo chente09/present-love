@@ -15,18 +15,56 @@
             <h1>Gracias por llenar mi mundo de amor y felicidad</h1>
         </header>
         <section class="carousel-container">
+            <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
             <div class="carousel">
+                <!-- Video 1 -->
                 <div class="carousel-item">
-                    <img src="https://i.pinimg.com/236x/fb/b9/ff/fbb9ffbf23243e6e3b3eb96d0ea00607.jpg" alt="Momento especial 1">
+                    <video src="video/8.mp4" controls></video>
                 </div>
+                <!-- Video 2 -->
                 <div class="carousel-item">
-                    <img src="https://i.pinimg.com/236x/35/7f/a9/357fa9b3e982d0d91e19e22811e66567.jpg" alt="Momento especial 2">
+                    <video src="video/7.mp4" controls></video>
                 </div>
+                <!-- Video 3 -->
                 <div class="carousel-item">
-                    <img src="https://i.pinimg.com/236x/4b/0f/49/4b0f492f29f187f6a89f545c9f25fd04.jpg" alt="Momento especial 3">
+                    <video src="video/6.mp4" controls></video>
+                </div>
+                <!-- Video 4 -->
+                <div class="carousel-item">
+                    <video src="video/5.mp4" controls></video>
+                </div>
+                <!-- Video 5 -->
+                <div class="carousel-item">
+                    <video src="video/4.mp4" controls></video>
+                </div>
+                <!-- Video 6 -->
+                <div class="carousel-item">
+                    <video src="video/3.mp4" controls></video>
+                </div>
+                <!-- Video 7 -->
+                <div class="carousel-item">
+                    <video src="video/2.mp4" controls></video>
+                </div>
+                <!-- Video 8 -->
+                <div class="carousel-item">
+                    <video src="video/1.mp4" controls></video>
+                </div>
+                <!-- Video 9 -->
+                <div class="carousel-item">
+                    <video src="video/01.mp4" controls></video>
+                </div>
+                <!-- Video 10 -->
+                <div class="carousel-item">
+                    <video src="video/0.2.mp4" controls></video>
+                </div>
+                <!-- Video 11 -->
+                <div class="carousel-item">
+                    <video src="video/00.mp4" controls></video>
                 </div>
             </div>
+            <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
         </section>
+        
         <section class="quote">
             <p>“A tu lado, cada día es un poema, y cada instante, un verso de amor eterno.”</p>
         </section>
@@ -65,13 +103,18 @@
                 <li>Tu sonrisa ilumina mis días.</li>
             </ul>
         </section>
-        
+
         <section class="promises">
             <h2>Mis promesas para ti:</h2>
             <p>Prometo ser tu apoyo en los días difíciles y celebrar contigo los momentos felices.</p>
             <p>Prometo cuidar de nuestro amor como lo más valioso que tengo.</p>
         </section>
     </div>
+    <!-- Reproductor de audio para la canción de fondo -->
+    <audio id="background-music" autoplay loop>
+        <source src="Audio.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
     <script src="script.js"></script>
 </body>
 

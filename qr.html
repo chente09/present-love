@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generar QR</title>
+    <title>Generador de QR Personalizado</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-    <h1>Generador de Código QR</h1>
+    <h1>Generador de Código QR Personalizado</h1>
     <input type="text" id="link" placeholder="Introduce el enlace" style="width: 300px;">
     <button onclick="generarQR()">Generar QR</button>
     <div id="qrcode"></div>
@@ -17,18 +17,36 @@
             const link = document.getElementById('link').value;
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = ""; // Limpiar QR previo
-
+    
             // Crear un elemento <canvas> donde se renderizará el QR
             const canvas = document.createElement('canvas');
             qrContainer.appendChild(canvas);
-
+    
+            // Opciones de personalización
+            const opciones = {
+                width: 200, // Tamaño del QR
+                color: {
+                    dark: '#000000', // Color de los módulos
+                    light: '#ffffff' // Color de fondo
+                },
+                // Para agregar un logotipo, puedes usar la opción 'image' con la URL de la imagen
+                image: {
+                    src: 'https://cdn-icons-png.flaticon.com/512/1077/1077086.png',
+                    width: 40,
+                    height: 40,
+                    x: 80, // Centrado horizontalmente
+                    y: 80  // Centrado verticalmente
+                }
+            };
+    
             // Generar el código QR en el <canvas>
-            QRCode.toCanvas(canvas, link, { width: 200 }, function (error) {
+            QRCode.toCanvas(canvas, link, opciones, function (error) {
                 if (error) {
                     console.error("Error generando el código QR:", error);
                 }
             });
         }
     </script>
+    
 </body>
 </html>
