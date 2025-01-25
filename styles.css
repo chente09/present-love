@@ -75,6 +75,7 @@ header h1 {
     max-height: 450px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    object-fit: cover; /* Asegura que el video mantenga su proporción */
 }
 
 .carousel-control {
@@ -82,7 +83,6 @@ header h1 {
     top: 50%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.5);
-    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     border: none;
     font-size: 24px;
@@ -105,26 +105,17 @@ header h1 {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-
 @keyframes slide {
-
-    0%,
-    20% {
+    0%, 20% {
         transform: translateX(0);
     }
-
-    25%,
-    45% {
+    25%, 45% {
         transform: translateX(-100%);
     }
-
-    50%,
-    70% {
+    50%, 70% {
         transform: translateX(-200%);
     }
-
-    75%,
-    100% {
+    75%, 100% {
         transform: translateX(0);
     }
 }
@@ -215,36 +206,89 @@ header h1 {
     cursor: pointer;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    /* Encabezados */
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin: 20px 0;
     }
 
     .quote p {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .timer h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .time-box span {
+        font-size: 1.2rem;
+    }
+
+    .special-messages h2,
+    .promises h2 {
         font-size: 1.5rem;
     }
 
+    /* Carrusel */
     .carousel-container {
         width: 100%;
-        height: auto;
-        margin: 3px 0;
-        overflow: hidden;
-        position: relative;
+        max-width: 100%;
+        border-radius: 5px;
     }
 
-    .carousel img {
-        width: 60%;
-        height: 100%;
-        border-radius: 15px;
-        box-shadow: 0 4px 10px var(--carousel-shadow);
+    .carousel-item video {
+        width: 100%;
+        max-height: 300px;
+        max-width: 100%;
+        border-radius: 10px;
+        object-fit: cover; /* Asegura que el video mantenga su proporción */
+    }
+
+    .carousel-control {
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+
+    .carousel-control.prev {
+        left: 5px;
+    }
+
+    .carousel-control.next {
+        right: 5px;
+    }
+
+    /* Espaciados generales */
+    .container {
+        padding: 10px;
+    }
+
+    .time-box {
+        padding: 8px 15px;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas (menos de 480px) */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .quote p {
+        font-size: 0.9rem;
+    }
+
+    .time-box span {
+        font-size: 1rem;
+    }
+
+    .carousel-item video {
+        max-height: 250px;
+    }
+
+    .carousel-control {
+        font-size: 16px;
+        padding: 5px 8px;
     }
 }
 
@@ -265,4 +309,26 @@ header h1 {
 
 #audio-control button:hover {
     background-color: #ff3b3b;
+}
+
+/* Ocultar carrusel en dispositivos sin soporte adecuado para video */
+@supports not (object-fit: cover) {
+    .carousel-container {
+        display: none; /* Oculta el carrusel si el navegador no soporta videos correctamente */
+    }
+
+    .unsupported-message {
+        display: block;
+        font-size: 1rem;
+        color: var(--highlight-color);
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+/* Específicos para pantallas muy pequeñas (iPhone) */
+@media screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    .carousel-item video {
+        max-height: 200px; /* Ajuste para pantallas pequeñas de iPhone */
+    }
 }

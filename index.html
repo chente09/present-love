@@ -11,11 +11,12 @@
 
 <body>
     <div class="container">
+        
         <header>
             <h1>Gracias por llenar mi mundo de amor y felicidad</h1>
         </header>
         <section class="carousel-container">
-            <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
+            <button class="prev carousel-control " onclick="prevSlide()">&#10094;</button>
             <div class="carousel">
                 <!-- Video 1 -->
                 <div class="carousel-item">
@@ -62,7 +63,7 @@
                     <video src="video/00.mp4" controls></video>
                 </div>
             </div>
-            <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
+            <button class="next carousel-control" onclick="nextSlide()">&#10095;</button>
         </section>
 
         <section class="quote">
@@ -109,15 +110,16 @@
             <p>Prometo ser tu apoyo en los días difíciles y celebrar contigo los momentos felices.</p>
             <p>Prometo cuidar de nuestro amor como lo más valioso que tengo.</p>
         </section>
-    </div>
-    <audio id="background-music" autoplay loop>
-        <source src="Audio.mp3" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
-    </audio>
+        <audio id="background-music" autoplay loop>
+            <source src="Audio.mp3" type="audio/mpeg">
+            Tu navegador no soporta la reproducción de audio.
+        </audio>
 
-    <section class="audio-control">
-        <button id="toggle-audio">Pausar Música</button>
-    </section>
+        <section class="audio-control">
+            <button id="toggle-audio">Pausar Música</button>
+        </section>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

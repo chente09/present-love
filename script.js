@@ -5,54 +5,54 @@ const App = {
 
   // Actualizar el carrusel
   updateCarousel() {
-      const carousel = document.querySelector('.carousel');
-      const items = document.querySelectorAll('.carousel-item');
-      const videos = document.querySelectorAll('video');
+    const carousel = document.querySelector('.carousel');
+    const items = document.querySelectorAll('.carousel-item');
+    const videos = document.querySelectorAll('video');
 
-      videos.forEach((video, index) => {
-          if (index === this.currentIndex) {
-              video.play(); // Reproducir el video actual
-              this.pauseBackgroundMusic(); // Pausar música si el video está en reproducción
-          } else {
-              video.pause(); // Pausar los demás videos
-          }
-      });
+    videos.forEach((video, index) => {
+      if (index === this.currentIndex) {
+        video.play(); // Reproducir el video actual
+        this.pauseBackgroundMusic(); // Pausar música si el video está en reproducción
+      } else {
+        video.pause(); // Pausar los demás videos
+      }
+    });
 
-      const offset = -this.currentIndex * 100;
-      carousel.style.transform = `translateX(${offset}%)`;
+    const offset = -this.currentIndex * 100;
+    carousel.style.transform = `translateX(${offset}%)`;
   },
 
   // Ir a la diapositiva anterior
   prevSlide() {
-      const items = document.querySelectorAll('.carousel-item');
-      this.currentIndex = (this.currentIndex === 0) ? items.length - 1 : this.currentIndex - 1;
-      this.updateCarousel();
+    const items = document.querySelectorAll('.carousel-item');
+    this.currentIndex = (this.currentIndex === 0) ? items.length - 1 : this.currentIndex - 1;
+    this.updateCarousel();
   },
 
   // Ir a la siguiente diapositiva
   nextSlide() {
-      const items = document.querySelectorAll('.carousel-item');
-      this.currentIndex = (this.currentIndex + 1) % items.length;
-      this.updateCarousel();
+    const items = document.querySelectorAll('.carousel-item');
+    this.currentIndex = (this.currentIndex + 1) % items.length;
+    this.updateCarousel();
   },
 
   // Pausar la música de fondo
   pauseBackgroundMusic() {
-      if (!this.backgroundMusic.paused) {
-          this.backgroundMusic.pause();
-          this.toggleAudioBtn.textContent = "Reanudar Música";
-      }
+    if (!this.backgroundMusic.paused) {
+      this.backgroundMusic.pause();
+      this.toggleAudioBtn.textContent = "Reanudar Música";
+    }
   },
 
   // Alternar la reproducción de la música de fondo
   toggleBackgroundMusic() {
-      if (this.backgroundMusic.paused) {
-          this.backgroundMusic.play();
-          this.toggleAudioBtn.textContent = "Pausar Música";
-      } else {
-          this.backgroundMusic.pause();
-          this.toggleAudioBtn.textContent = "Reanudar Música";
-      }
+    if (this.backgroundMusic.paused) {
+      this.backgroundMusic.play();
+      this.toggleAudioBtn.textContent = "Pausar Música";
+    } else {
+      this.backgroundMusic.pause();
+      this.toggleAudioBtn.textContent = "Reanudar Música";
+    }
   },
 
   // Actualizar el temporizador
@@ -69,34 +69,34 @@ const App = {
 
     // Ajuste si los meses son negativos
     if (months < 0) {
-        years--;
-        months += 12;
+      years--;
+      months += 12;
     }
 
     // Ajuste si los días son negativos
     if (days < 0) {
-        months--;
-        // Obtener el número de días del mes anterior
-        const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-        days += previousMonth.getDate();
+      months--;
+      // Obtener el número de días del mes anterior
+      const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += previousMonth.getDate();
     }
 
     // Ajuste si las horas son negativas
     if (hours < 0) {
-        days--;
-        hours += 24;
+      days--;
+      hours += 24;
     }
 
     // Ajuste si los minutos son negativos
     if (minutes < 0) {
-        hours--;
-        minutes += 60;
+      hours--;
+      minutes += 60;
     }
 
     // Ajuste si los segundos son negativos
     if (seconds < 0) {
-        minutes--;
-        seconds += 60;
+      minutes--;
+      seconds += 60;
     }
 
     // Actualizar en el HTML
@@ -106,52 +106,58 @@ const App = {
     document.getElementById("hours").textContent = hours;
     document.getElementById("minutes").textContent = minutes;
     document.getElementById("seconds").textContent = seconds;
-},
+  },
 
   // Actualizar el mensaje
   updateMessage() {
-      const messages = [
-          "Tu sonrisa ilumina mis días.",
-          "La forma en que siempre encuentras algo bueno en todo.",
-          "Cómo haces que cada momento sea inolvidable.",
-          "Tus abrazos son mi lugar favorito.",
-          "Tu risa es la melodía que alegra mi corazón."
-      ];
+    const messages = [
+      "Tu sonrisa ilumina mis días.",
+      "La forma en que siempre encuentras algo bueno en todo.",
+      "Cómo haces que cada momento sea inolvidable.",
+      "Tus abrazos son mi lugar favorito.",
+      "Tu risa es la melodía que alegra mi corazón."
+    ];
 
-      const randomIndex = Math.floor(Math.random() * messages.length);
-      const messageList = document.getElementById("message-list");
-      messageList.innerHTML = `<li>${messages[randomIndex]}</li>`;
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    const messageList = document.getElementById("message-list");
+    messageList.innerHTML = `<li>${messages[randomIndex]}</li>`;
   },
 
   // Inicializar la aplicación
   init() {
-      document.querySelector('.prev').addEventListener('click', () => this.prevSlide());
-      document.querySelector('.next').addEventListener('click', () => this.nextSlide());
+    // Asignar funciones a botones
+    document.querySelector('.prev').addEventListener('click', () => this.prevSlide());
+    document.querySelector('.next').addEventListener('click', () => this.nextSlide());
 
-      // Referencias al audio y botón
-      this.backgroundMusic = document.getElementById('background-music');
-      this.toggleAudioBtn = document.getElementById('toggle-audio');
+    // Exponer las funciones globalmente (para onclick en el HTML)
+    window.prevSlide = this.prevSlide.bind(this);
+    window.nextSlide = this.nextSlide.bind(this);
 
-      // Escuchar el clic del botón para alternar música
-      this.toggleAudioBtn.addEventListener('click', () => this.toggleBackgroundMusic());
+    // Referencias al audio y botón
+    this.backgroundMusic = document.getElementById('background-music');
+    this.toggleAudioBtn = document.getElementById('toggle-audio');
 
-      // Pausar la música cuando se reproduce un video
-      const videos = document.querySelectorAll('video');
-      videos.forEach(video => {
-          video.addEventListener('play', () => this.pauseBackgroundMusic());
-          video.addEventListener('pause', () => {
-              if (Array.from(videos).every(v => v.paused)) {
-                  this.backgroundMusic.play();
-                  this.toggleAudioBtn.textContent = "Pausar Música";
-              }
-          });
+    // Escuchar el clic del botón para alternar música
+    this.toggleAudioBtn.addEventListener('click', () => this.toggleBackgroundMusic());
+
+    // Pausar la música cuando se reproduce un video
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+      video.addEventListener('play', () => this.pauseBackgroundMusic());
+      video.addEventListener('pause', () => {
+        if (Array.from(videos).every(v => v.paused)) {
+          this.backgroundMusic.play();
+          this.toggleAudioBtn.textContent = "Pausar Música";
+        }
       });
+    });
 
-      this.updateCarousel();
-      setInterval(() => this.updateTimer(), 1000);
-      setInterval(() => this.updateMessage(), 5000);
-      this.updateMessage();
+    this.updateCarousel();
+    setInterval(() => this.updateTimer(), 1000);
+    setInterval(() => this.updateMessage(), 5000);
+    this.updateMessage();
   }
+
 };
 
 // Inicializar la aplicación al cargar la página
