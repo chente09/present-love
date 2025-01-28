@@ -67,10 +67,22 @@ const App = {
     let minutes = now.getMinutes() - startDate.getMinutes();
     let seconds = now.getSeconds() - startDate.getSeconds();
 
-    // Ajuste si los meses son negativos
-    if (months < 0) {
-      years--;
-      months += 12;
+    // Ajuste si los segundos son negativos
+    if (seconds < 0) {
+      minutes--;
+      seconds += 60;
+    }
+
+    // Ajuste si los minutos son negativos
+    if (minutes < 0) {
+      hours--;
+      minutes += 60;
+    }
+
+    // Ajuste si las horas son negativas
+    if (hours < 0) {
+      days--;
+      hours += 24;
     }
 
     // Ajuste si los días son negativos
@@ -81,22 +93,10 @@ const App = {
       days += previousMonth.getDate();
     }
 
-    // Ajuste si las horas son negativas
-    if (hours < 0) {
-      days--;
-      hours += 24;
-    }
-
-    // Ajuste si los minutos son negativos
-    if (minutes < 0) {
-      hours--;
-      minutes += 60;
-    }
-
-    // Ajuste si los segundos son negativos
-    if (seconds < 0) {
-      minutes--;
-      seconds += 60;
+    // Ajuste si los meses son negativos
+    if (months < 0) {
+      years--;
+      months += 12;
     }
 
     // Actualizar en el HTML
@@ -107,6 +107,7 @@ const App = {
     document.getElementById("minutes").textContent = minutes;
     document.getElementById("seconds").textContent = seconds;
   },
+
 
   // Actualizar el mensaje
   updateMessage() {
